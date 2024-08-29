@@ -59,46 +59,24 @@ public class MyArrayList<T> implements MyList<T> {
      * Sorts a given list using bubble sort algorithm.<br/>
      * Time complexity: {@code O(n^2)}<br/>
      * Space complexity: {@code O(1)}
-     * @param list List to sort.
-     * @param <R> List elements type.
-     */
-    public static <R extends Comparable<R>> void bubbleSort(MyArrayList<R> list) {
-        bubbleSort(list, R::compareTo);
-    }
-
-    /**
-     * Sorts a given list using bubble sort algorithm.<br/>
-     * Time complexity: {@code O(n^2)}<br/>
-     * Space complexity: {@code O(1)}
-     * @param list List to sort.
      * @param comparator Comparator for sorting.
-     * @param <R> List elements type.
      */
-    public static <R> void bubbleSort(MyArrayList<R> list, Comparator<? super R> comparator) {
-        if(list == null || list.size == 0) return;
+    @Override
+    public void sort(Comparator<? super T> comparator) {
+        if(size == 0) return;
         if(comparator == null) return;
         boolean sorted;
         do {
             sorted = true;
-            for(int i = 0; i < list.size() - 1; i++) {
-                if(comparator.compare(list.get(i), list.get(i + 1)) > 0) {
-                    R temp = list.array[i + 1];
-                    list.array[i + 1] = list.array[i];
-                    list.array[i] = temp;
+            for(int i = 0; i < size() - 1; i++) {
+                if(comparator.compare(get(i), get(i + 1)) > 0) {
+                    T temp = array[i + 1];
+                    array[i + 1] = array[i];
+                    array[i] = temp;
                     sorted = false;
                 }
             }
         } while(!sorted);
-    }
-
-    /**
-     * Adds a new element to the end of the list.<br/>
-     * Time complexity: general: {@code O(1)}, when expanding: {@code O(n)}
-     * @param el Element to add.
-     */
-    @Override
-    public void add(T el) {
-        addAt(size, el);
     }
 
     /**
@@ -159,16 +137,6 @@ public class MyArrayList<T> implements MyList<T> {
         moveRightHandSide(ind + 1, ind);
         size--;
         return elAtInd;
-    }
-
-    /**
-     * Adds elements from collection of size {@code m} to the end of the list.<br/>
-     * Time complexity: general: {@code O(m)}, when expanding: {@code O(n + m)}
-     * @param col Collection to be added.
-     */
-    @Override
-    public void addAll(Collection<? extends T> col) {
-        addAllAt(size, col);
     }
 
     /**

@@ -49,11 +49,4 @@ public class MyArrayListTests extends MyListTests {
             assertDoesNotThrow(() -> list.addAllAt(0, col));
         }
     }
-
-    @Test
-    public void BubbleSortTest() {
-        MyArrayList<Integer> list = new MyArrayList<>(List.of(5, 4, 3, 2, 1));
-        MyArrayList.bubbleSort(list);
-        assertListEquals(list, List.of(1, 2, 3, 4, 5));
-    }
 }

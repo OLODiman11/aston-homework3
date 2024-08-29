@@ -181,6 +181,16 @@ public abstract class MyListTests {
         }
     }
 
+    @Nested
+    class SortTests {
+        @Test
+        public void SortsList(){
+            MyList<Integer> list = createList(List.of(5, 4, 3, 2, 1));
+            MyList.sort(list);
+            assertListEquals(list, List.of(1, 2, 3, 4, 5));
+        }
+    }
+
     protected void assertListEquals(MyList<Integer> list, Collection<Integer> col) {
         assertEquals(col.size(), list.size());
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(list.size()));

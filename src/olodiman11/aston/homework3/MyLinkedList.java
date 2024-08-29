@@ -32,49 +32,27 @@ public class MyLinkedList<T> implements MyList<T> {
      * Sorts a given list using bubble sort algorithm.<br/>
      * Time complexity: {@code O(n^2)}<br/>
      * Space complexity: {@code O(1)}
-     * @param list List to sort.
-     * @param <R> List elements type.
-     */
-    public static <R extends Comparable<R>> void bubbleSort(MyLinkedList<R> list) {
-        bubbleSort(list, R::compareTo);
-    }
-
-    /**
-     * Sorts a given list using bubble sort algorithm.<br/>
-     * Time complexity: {@code O(n^2)}<br/>
-     * Space complexity: {@code O(1)}
-     * @param list List to sort.
      * @param comparator Comparator for sorting.
-     * @param <R> List elements type.
      */
-    public static <R> void bubbleSort(MyLinkedList<R> list, Comparator<? super R> comparator) {
-        if(list == null || list.head == null) return;
+    @Override
+    public void sort(Comparator<? super T> comparator) {
+        if(head == null) return;
         if(comparator == null) return;
         boolean sorted;
         do {
-            Node<R> current = list.head;
+            Node<T> current = head;
             sorted = true;
             while(current.next != null) {
-                Node<R> next = current.next;
+                Node<T> next = current.next;
                 if(comparator.compare(current.value, next.value) > 0) {
-                    list.putInThatOrder(current.prev, next, current, next.next);
-                    list.updateHeadAndTailIfNecessary(next, current);
+                    putInThatOrder(current.prev, next, current, next.next);
+                    updateHeadAndTailIfNecessary(next, current);
                     sorted = false;
                     continue;
                 }
                 current = current.next;
             }
         } while(!sorted);
-    }
-
-    /**
-     * Adds a new element to the end of the list.<br/>
-     * Time complexity: {@code O(1)}
-     * @param el Element to add.
-     */
-    @Override
-    public void add(T el) {
-        addAt(size, el);
     }
 
     /**
@@ -133,16 +111,6 @@ public class MyLinkedList<T> implements MyList<T> {
         Node<T> nodeAtInd = getNodeAt(ind);
         removeNode(nodeAtInd);
         return nodeAtInd.value;
-    }
-
-    /**
-     * Adds elements from collection if size {@code m} to the end of the list.<br/>
-     * Time complexity: {@code O(m)}
-     * @param col Collection to be added.
-     */
-    @Override
-    public void addAll(Collection<? extends T> col) {
-        addAllAt(size, col);
     }
 
     /**
